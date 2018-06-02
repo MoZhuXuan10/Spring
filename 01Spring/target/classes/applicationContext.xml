@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--管理dao层的对象-->
+    <bean id="studentDaoImpl" class="com.syl.dao.impl.StudentDaoImpl"/>
+
+    <!--管理service层的对象-->
+    <bean id="studentServiceImpl" class="com.syl.service.impl.StudentServiceImpl">
+        <!--给指定的dao属性赋值-->
+        <property name="dao"  ref="studentDaoImpl"/>
+    </bean>
+
+
+    <!--创建student类的bean
+      xml文件中所有的bean 都是单例的
+      默认scope="singleton"
+      scope="prototype"  设置原型   默认也是延迟加载
+
+       lazy-init="true" 设置延迟加载
+    -->
+    <bean id="student" class="com.syl.bean.Student" lazy-init="true">
+        <property name="age" value="20"/>
+        <property name="name" value="小黑"/>
+    </bean>
+    <!-- 在spring的核心配置文件中  所有的bean默认都是单例模式
+      scope="singleton"  默认
+      scope="prototype"  原型
+      -->
+    <bean id="student2" class="com.syl.bean.Student" scope="prototype">
+        <property name="age" value="40"/>
+        <property name="name" value="小黑2"/>
+    </bean>
+
+</beans>
