@@ -5,6 +5,8 @@ import com.syl.advices.MyException;
 public interface UserDao {
     String eat();//主业务 吃饭
     void sleep();//主业务 睡觉
+    void ea();
+    void e();
 
     //验证异常通知
     boolean login(String name,String password) throws MyException;

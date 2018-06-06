@@ -53,4 +53,16 @@ public class AdviceDemo {
         userDao.eat();
         userDao.sleep();
     }
+    /**
+     *  使用顾问  regex.xml
+     */
+    @Test //前置通知
+    public void  testRegex(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("regex.xml");
+        UserDao userDao= context.getBean("userProxy",UserDao.class);
+        userDao.eat();
+        userDao.ea();
+        userDao.e();
+        userDao.sleep();
+    }
 }

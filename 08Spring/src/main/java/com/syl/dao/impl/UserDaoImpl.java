@@ -13,6 +13,16 @@ public class UserDaoImpl implements UserDao {
         System.out.println("正在睡觉……");
     }
 
+    @Override
+    public void ea() {
+        System.out.println("ea方法");
+    }
+
+    @Override
+    public void e() {
+        System.out.println("e方法");
+    }
+
     public boolean login(String name, String password) throws MyException {
         if (!"admin".equals(name)) {
             throw new MyException("用户名错误");
