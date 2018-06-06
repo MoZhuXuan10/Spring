@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--01.配置目标对象-->
+    <bean id="userDao" class="com.syl.dao.impl.UserDaoImpl"/>
+    <!--为了测试 这个目标对象的sleep()不会增强-->
+    <bean id="userDao2" class="com.syl.dao.impl.UserDaoImpl"/>
+    <!--02.配置相应的增强类-->
+    <bean id="before" class="com.syl.advices.BeforeAdvice"/>
+    <!--03.设置顾问  让目标对象和通知产生关系-->
+    <bean id="myAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <!--配置通知-->
+        <property name="advice" ref="before"/>
+        <!--配置切入点-->
+        <property name="mappedName"  value="sleep"/>
+    </bean>
+    <!--04.配置根据名称来自动匹配代理生成器 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+        <property name="beanName" value="userDao"/><!--配置需要增强的目标对象-->
+        <property name="interceptorNames" value="myAdvisor"/><!--增强的顾问-->
+    </bean>
+
+</beans>
